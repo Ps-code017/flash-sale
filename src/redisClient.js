@@ -9,6 +9,6 @@ redisClient.on("error", (err) => {
 });
 
 await redisClient.connect();
-await redisClient.set('ticket_count',10);
+
 
 export default redisClient;
