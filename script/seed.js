@@ -6,10 +6,8 @@ const redisClient = createClient({
 
 async function seedRedis() {
     await redisClient.connect();
-    console.log("flushing db !!");
+    console.log("flushing redis !!");
     await redisClient.flushDb();
-    console.log("setting key ticket_count !!");
-    await redisClient.set('ticket_count',10);
     await redisClient.disconnect()
 }
 seedRedis();
