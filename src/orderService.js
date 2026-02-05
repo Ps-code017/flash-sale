@@ -28,6 +28,19 @@ export const createOrder=async({saleId,userId})=>{
         await client.query(`
             UPDATE tickets SET status='SOLD' WHERE id=$1
         `,[ticketId]);
+
+        const outboxPayload={
+            orderId,
+            saleId,
+            ticketId,
+            userId,
+            createdAt: new Date().toISOString()
+        }
+
+        await client.query(
+            `INSERT INTO outbox (id,aggregate_type,aggregate_id,event_type,payload) VALUES ($1, $2, $3, $4, $5)`,
+            [uuidv4(), 'ORDER', orderId, 'ORDER_CREATED', outboxPayload]
+        );
     
         await client.query('COMMIT');
     
