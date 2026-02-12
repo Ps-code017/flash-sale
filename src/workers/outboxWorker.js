@@ -11,6 +11,7 @@ const publishEvent = async (event) => {
       {
         key: event.aggregate_id,
         value: JSON.stringify({
+          eventId: event.id,
           eventType: event.event_type,
           payload: event.payload,
         }),
